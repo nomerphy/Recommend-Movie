@@ -1,0 +1,255 @@
+@import '_reset.scss';
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
+
+body
+{
+	--main: #5F27CD;
+	--lightmain: #7D6AD7;
+	--background: #F6F8FC;
+	--categories: #E9EAEB;
+	--text: #252525;
+	--movieButton: #FFFFFC;
+	--rating: #1DD1A1;
+	--alert: #FF6B6B;
+
+	--radius: 12px;
+
+	--transition: .35s ease-out;
+
+    font-family: 'Raleway', sans-serif;
+
+    display: grid;
+    overflow: hidden;
+
+    height: 100vh;
+
+    color: var(--text);
+    background: var(--background);
+
+    place-items: center;
+}
+
+::selection{
+	background: var(--lightmain);
+	color: var(--background);
+}
+
+.movie
+{
+    width: 1280px;
+    height: 100%;
+
+    &__header
+    {
+        display: flex;
+
+        width: 100%;
+        height: 100px;
+        padding: 10px 0;
+
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__logo
+    {
+        transition: var(--transition);
+        &:hover
+        {
+            opacity: .8;
+        }
+    }
+
+    &__button
+    {
+        font-family: 'Raleway', sans-serif;
+        font-size: 16px;
+        font-weight: bold;
+        position: relative;
+
+        z-index: 1;
+
+        padding: 18px 32px;
+
+        cursor: pointer;
+        transition: var(--transition);
+
+        color: var(--background);
+        border: none;
+        outline: none;
+        background: var(--main);
+
+        transform-style: preserve-3d;
+        border-radius: var(--radius);
+
+        &:before
+        {
+            position: absolute;
+            z-index: -1;
+            top: 0;
+            left: 100%;
+
+            width: 35%;
+            height: 100%;
+
+            content: '';
+            transition: var(--transition);
+            transform: rotateY(85deg);
+            transform-origin: -35% 0;
+
+            background: var(--lightmain);
+        }
+
+        &:hover
+        {
+            transform: rotateY(-20deg);
+
+            border-radius: 0;
+        }
+
+    }
+
+    &__container{
+    	padding: 40px 0 0 0;
+    	width: 100%;
+    	height: 100%;
+    	display: grid;
+    	grid-template-columns: 360px 1fr;
+    }
+
+    &__poster{
+    	border-radius: var(--radius);
+    	width: 100%;
+    	height: 560px;
+    	background: var(--main);
+    	background-size: cover;
+    	background-position: center center;
+    }
+
+    &__main{
+    	padding-left: 40px;
+    	display: flex;
+    	flex-direction: column;
+    }
+
+    &__title-container{
+    	width: 100%;
+    	min-height: 50px;
+    	line-height: 1.2;
+    	height: auto;
+    	display: flex;
+    	align-items: flex-start;
+    }
+
+    &__title{
+    	font-size: 40px;
+    	font-weight: bold;
+    	cursor: pointer;
+    	transition: var(--transition);
+
+    	&:hover{
+    		opacity: .8;
+    	}
+    }
+
+    &__rating{
+    	margin-left: 15px;
+    	padding: 10px 12px;
+    	background: var(--rating);
+    	border-radius: var(--radius);
+    	font-weight: bold;
+    	color: var(--background);
+    	display: grid;
+    	place-items: center;
+    	font-size: 18px;
+    	font-family: 'Segoe UI';
+    	pointer-events: none;
+    	user-select: none;
+    }
+
+    &__realese-container{
+    	width: 100%;
+    	margin-top: 15px;
+    }
+
+    &__realese{
+    	font-size: 18px;
+    	font-weight: bold;
+    }
+
+    &__categories-container{
+    	margin-top: 25px;
+    	width: 100%;
+    	height: 50px;
+    	display: flex;
+    }
+
+    &__categories{
+    	padding: 12px 16px;
+    	background: var(--categories);
+    	font-weight: bold;
+    	font-size: 16px;
+    	display: flex;
+    	justify-content: center;
+    	align-items: center;
+    	border-radius: var(--radius);
+    	user-select: none;
+    	pointer-events: none;
+
+    	&:not(:first-child){
+    		margin-left: 15px;
+    	}
+    }
+
+    &__about-container{
+    	margin-top: 25px;
+    	width: 100%;
+    }
+
+    &__about-title{
+    	font-size: 24px;
+    	font-weight: bold;
+    }
+
+    &__description-container{
+    	margin-top: 15px;
+    	max-width: 620px;
+    	width: auto;
+    	min-height: 325px;
+    	height: auto;
+    }
+    
+    &__description{
+    	line-height: 1.5;
+    	font-size: 18px;
+    }
+
+
+}
+
+.ripple {
+    position: absolute;
+
+    width: 0;
+    height: 0;
+
+    transform: translate(-50%,-50%);
+    animation: ripple .85s linear;
+    pointer-events: none;
+
+    opacity: .7;
+    border-radius: 50%;
+    background: var(--background);
+}
+
+
+@keyframes ripple
+{
+    to
+    {
+        width: 400px;
+        height: 400px;
+
+        opacity: 0;
+    }
+}

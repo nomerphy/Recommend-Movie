@@ -1,0 +1,34 @@
+doctype html
+html(lang='ru')
+	head
+		title Рекомендасьон
+		link(rel="stylesheet" href="./css/main.css")
+		link(rel="icon" href="./images/icon.svg")
+	body
+		.movie
+			header.movie__header
+				a(href="./index.html" class="movie__logo")
+					img(src="./images/logo.svg" alt="logo")
+				button(class="movie__button") Что посмотреть?
+			.movie__container
+				.movie__sidebar
+					.movie__poster
+
+				.movie__main
+					.movie__title-container
+						h1.movie__title Мой сосед Тоторо
+						span.movie__rating
+					.movie__realese-container
+						p.movie__realese Дата релиза — 1974
+					ul.movie__categories-container
+						li.movie__categories Adventure
+						li.movie__categories History
+						li.movie__categories Romantic
+						li.movie__categories Comedy
+						li.movie__categories Reverance
+					.movie__about-container
+						h3.movie__about-title Про что «Мой сосед тоторо»:
+					.movie__description-container
+						p.movie__description 
+
+	script(src="./script/main.js")
