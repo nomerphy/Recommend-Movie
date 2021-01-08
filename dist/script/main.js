@@ -1,28 +1,38 @@
 // DOM ELEMENTS
 const recommendBtn = document.querySelector(".movie__button");
-const poster = document.querySelector(".movie__poster");
+const movieWrap = document.querySelector('.movie');
+const poster = document.querySelector(".movie__poster-img");
 const title = document.querySelector(".movie__title");
 const movieAbout = document.querySelector(".movie__about-title");
 const description = document.querySelector(".movie__description ");
 const rating = document.querySelector(".movie__rating");
 const movieRealeseDate = document.querySelector(".movie__realese");
+const posterBtn = document.querySelector('.movie__poster-btn');
+const categorieContainer = document.querySelector(
+	".movie__categories-container"
+);
 
 // EVENT LISTENERS
 recommendBtn.addEventListener("click", buttonEffect);
 recommendBtn.addEventListener("click", recommendMovie);
+posterBtn.addEventListener("click", findMovie);
+title.addEventListener('click', searchInGoogle);
 document.addEventListener("DOMContentLoaded", recommendMovie);
+recommendBtn.addEventListener('click', () => categorieContainer.innerHTML = "");
+
+
+// VARIABLES
 
 // FUNCTIONS
-
 function buttonEffect(event) {
+
 	const x = event.clientX - event.target.offsetLeft;
 	const y = event.clientY - event.target.offsetTop;
 
-	const ripple = document.createElement("span");
-	ripple.className = "ripple";
-
-	ripple.style.left = x + "px";
-	ripple.style.top = y + "px";
+	const ripple = document.createElement('span');
+	ripple.className = 'ripple';
+	ripple.style.left = x + 'px';
+	ripple.style.top = y + 'px';
 
 	this.appendChild(ripple);
 
@@ -32,7 +42,11 @@ function buttonEffect(event) {
 }
 
 // перед функцией или fetch попробовать добавить лоадер
+// Расширеный поиск(в hdRezka, в google, смотреть на англ и т.д.)
 // Чтение описания в голос
+// Сменять фильмы по таймауту
+// Рекомендация книг
+// Добавить дату в поиск по браузеру
 
 async function recommendMovie() {
 	const randomPage = Math.floor(Math.random() * 15) + 1;
@@ -49,13 +63,12 @@ async function recommendMovie() {
 	const randomMovie = Math.floor(Math.random() * result.length);
 
 	const movie = result[randomMovie];
-	console.log(movie);
 
 	// Show data
 	const posterPath = movie.poster_path
-		? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+		? `https://image.tmdb.org/t/p/original${movie.poster_path}`
 		: "../images/no-poster.jpg";
-	poster.setAttribute("style", `background: url('${posterPath}')`);
+	poster.src = posterPath;
 
 	title.textContent = movie.title || movie.original_title;
 	movieAbout.textContent = `Про что «${movie.title ||
@@ -72,8 +85,32 @@ async function recommendMovie() {
 
 	movieRealeseDate.textContent = `Дата релиза — ${realeseDate}`;
 
+	let categories = transformArray(movie.genre_ids);
 
+	categories.forEach((categorie) => {
+		let categorieWrap = document.createElement("li");
+		categorieWrap.classList.add("movie__categories");
+		categorieWrap.innerHTML = categorie;
+		categorieContainer.appendChild(categorieWrap);
+	});
 }
+
+function openURL(url) {
+	window.open(url, "_blank");
+}
+
+function findMovie() {
+	const movieToFind = title.textContent;
+	openURL(`https://rezka.ag/index.php?do=search&subaction=search&q=${movieToFind}`);
+}
+
+function searchInGoogle() {
+	const movieToFind = title.textContent;
+	const movieYear = movieRealeseDate.textContent.slice(14,18);
+	console.log(movieYear);
+	openURL(`https://www.google.com/search?q=Фильм ${movieToFind} ${movieYear} смотреть`);
+}
+
 
 function transformArray(array) {
 	let values = [];
@@ -86,39 +123,39 @@ function transformArray(array) {
 		} else if (array[i] == 16) {
 			values.push("Мультипликация");
 		} else if (array[i] == 35) {
-			values += "Комедия";
+			values.push("Комедия");
 		} else if (array[i] == 80) {
-			values += "Криминал";
+			values.push("Криминал");
 		} else if (array[i] == 99) {
-			values += "Документальное";
+			values.push("Документальный");
 		} else if (array[i] == 18) {
-			values += "Драма";
+			values.push("Драма");
 		} else if (array[i] == 10751) {
-			values += "Семейное";
+			values.push("Семейный");
 		} else if (array[i] == 14) {
-			values += "Фэнтези";
+			values.push("Фэнтези");
 		} else if (array[i] == 36) {
-			values += "Историческое";
+			values.push("Исторический");
 		} else if (array[i] == 27) {
-			values += "Хоррор";
+			values.push("Хоррор");
 		} else if (array[i] == 10402) {
-			values += "Музыкальное";
+			values.push("Музыкальный");
 		} else if (array[i] == 9648) {
-			values += "Мистическое";
+			values.push("Мистический");
 		} else if (array[i] == 10749) {
-			values += "Романтика";
+			values.push("Романтика");
 		} else if (array[i] == 878) {
-			values += "Научная фантастика";
+			values.push("Научная фантастика");
 		} else if (array[i] == 10770) {
-			values += "Телевизионное";
+			values.push("Телевизионное");
 		} else if (array[i] == 53) {
-			values += "Триллер";
+			values.push("Триллер");
 		} else if (array[i] == 10752) {
-			values += "Военное";
+			values.push("Военное");
 		} else if (array[i] == 37) {
-			values += "Вестерн";
+			values.push("Вестерн");
 		} else {
-			values = "";
+			values = [];
 		}
 	}
 	return values;
